@@ -22,6 +22,7 @@ urlpatterns = patterns(
     url(r'^spider/', include('stucampus.spider.urls', namespace='spider')),
     url(r'^activity/', include('stucampus.activity.urls',
                                namespace='activity')),
+    url(r'^apply/', include('stucampus.apply.urls', namespace='apply')),
     url(r'^admin/', include(admin.site.urls)),
 )
 

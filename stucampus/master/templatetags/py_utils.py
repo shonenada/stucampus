@@ -1,4 +1,5 @@
 #-*- coding: utf-8
+import __builtin__
 from datetime import datetime
 
 from django import template
@@ -7,11 +8,24 @@ from django.utils.timezone import utc
 register = template.Library()
 
 
+@register.filter
+def call_func(var, func_name, module=__builtin__):
+    func = getattr(module, func_name)
+    return func(var)
+
+
 @register.filter(name='as_range')
 def as_range(upper, lower=0):
     return range(lower, upper)
 
 
+@register.filter
+def get_value(var, index):
+    return var[index]
+
+
+# TODO:
+# http://stu.szu.edu.cn:8000/django/ref/templates/builtins.html#truncatechars
 @register.filter(name='ellipsis')
 def ellipsis(text, input_tuple):
     exec("%s%s" % ("max_length, replacement = ", input_tuple))

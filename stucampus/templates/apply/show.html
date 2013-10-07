@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% comment %}
+！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+！！！因为团委审核的老师用的浏览器不上档次！样式和脚本请尽量兼容IE6 ！！！
+！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+{% endcomment %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>深圳大学学生活动中心场所申请</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        #main{
+            margin:0 auto;
+            width: 800px;
+        }
+        ul.inline li{
+            display: inline;
+        }
+    </style>
+    <script>
+        var viewMsg = function(t, d){
+
+        }
+    </script>
+</head>
+{% load py_utils %}
+<body>
+    <h1>深圳大学{{ place.name }}一周安排表</h1>
+    <a href="/apply/place">返回</a><br />
+    {% if place.sub_places|length > 1%}
+    <ul class="inline">
+    {% for sub in place.sub_places %}
+        <li><a href="#{{sub.name}}">{{sub.name}}</a></li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    <div id="main">
+        {% for sub in place.sub_places %}
+        <a name="{{ sub.name }}"></a>
+        <table>
+            <tr>
+                <td width="150" align="center" bgcolor="#D9CFFE">{{ sub.name }}</td>
+                {% for day in days %}
+                <td width="120" align="center" bgcolor="#D9CFFE">{{ day|date:'m月d日' }}<br>{{ day|date:'l' }}</td>
+                {% endfor %}
+            </tr>
+            {% for index in sub.times|length|as_range %}
+            <tr bgcolor="#E2EBFE" height="50">
+                <td width="120" align="center">{{ sub.times|get_value:index }}</td>
+                {% for i in 7|as_range %}
+                <td id="time_{{index}}_{{i}}" onclick="viewMsg({{index}}, {{i}})"></td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <br />
+        {% endfor %}
+    </div>
+</body>
+</html>
