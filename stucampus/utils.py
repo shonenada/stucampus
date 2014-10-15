@@ -1,5 +1,4 @@
 import json
-import urllib2
 
 from django.http import HttpResponse
 
@@ -10,7 +9,7 @@ def render_json(context, **response_kwargs):
     return HttpResponse(data, **response_kwargs)
 
 
-def spec_json(status='Error', messages=None):
+def spec_json(status='errors', messages=None):
     if not messages:
         messages = []
     elif not isinstance(messages, (dict, list, tuple)):
